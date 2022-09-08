@@ -1,9 +1,10 @@
 import requests
 import urllib3
+import multiprocessing
 urllib3.disable_warnings()
 
 awvs_url = "https://localhost:3443"
-apikey ="1986ad8c0a5b3df4d7028d5f3c06e936cd6c18d036b3946158cb226e23366c66d"
+apikey ="1986ad8c0a5b3df4d7028d5f3c06e936c6c4a625946534489a8ea478e2b166adc"
 headers = {
     "Cookie": "ui_session="+apikey,
     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/98.0.4758.102 Safari/537.36",
@@ -55,10 +56,7 @@ if __name__ == '__main__':
     print("\n配置说明：目标请放在url.txt文件中，请在awvs_url中配置awvs地址，apikey中填写key")
     model = (input("\n添加扫描目标请输入1，删除扫描目标请输入2："))
     if model == "1":
-        addscan()
+        p = multiprocessing.Process(target=addscan)
+        p.start()
     if model == "2":
         delscan()
-
-
-
-
