@@ -1,62 +1,62 @@
-import requests
-import urllib3
-import multiprocessing
-urllib3.disable_warnings()
+进口要求
+进口urllib3
+进口多重处理
+urllib3。禁用_警告()
 
-awvs_url = "https://localhost:3443"
-apikey ="1986ad8c0a5b3df4d7028d5f3c06e936c6c4a625946534489a8ea478e2b166adc"
-headers = {
-    "Cookie": "ui_session="+apikey,
-    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/98.0.4758.102 Safari/537.36",
-    "Content-Type": "application/json",
-    "Accept": "application/json, text/plain, */*",
-    "X-Auth": apikey,
-    "Accept-Encoding": "gzip, deflate",
-    "Accept-Language": "zh-CN,zh;q=0.9",
-    "Connection": "close"
+awvs_url =" https://localhost:3443 "
+apikey =" 1986 ad 8 c 0 a 5 B3 df 4d 7028d 5 F3 c 06 e 936 c 6 C4 a 625946534489 A8 ea 478 e 2 b 166 ADC "
+标题={
+    "饼干": " ui_session= "+apikey，
+    "用户代理": “Mozilla/5.0(Windows NT 10.0；Win64x64) AppleWebKit/537.36 (KHTML，像壁虎一样)Chrome/98 . 0 . 4758 . 102 Safari/537.36 ",
+    "内容类型": "应用程序/json ",
+    "接受": "应用程序/json，文本/普通，*/* ",
+    " X-Auth ":apikey，
+    "接受编码": gzip，放气,
+    "接受-语言": “zh-CN，zh；q=0.9英寸,
+    “连接”: "关闭"
 }
 
-def addscan():
-    addurl = awvs_url+"/api/v1/targets/add"
-    urls = []
-    targetids = []
-    with open('url.txt','r') as f:
-        for i in f.readlines():
-            urls.append(i.strip())
-    for x in urls:
-        #print(x)
-        data = '{"targets":[{"address":"%s","description":""}]}' %(x)
-        #print(data)
-        add = requests.post(url = addurl,data = data,headers=headers,verify=False,timeout=10)
-        data_json = add.json()
-        items = data_json.get("targets", [])
-        for y in items:
-            targetid = y.get("target_id")
-        scanurl = awvs_url+"/api/v1/scans"
-        data2 = '{"profile_id":"11111111-1111-1111-1111-111111111111","incremental":false,"schedule":{"disable":false,"start_date":null,"time_sensitive":false},"target_id":"%s"}' % targetid
-        scan = requests.post(url = scanurl,data = data2,headers=headers,verify=False,timeout=10)
-        print(x,"添加成功")
-def delscan():
-    url = awvs_url+"/api/v1/scans"
-    id = requests.get(url = url,headers=headers,verify=False,timeout=10)
-    data_json = id.json()
-    items = data_json.get("scans", [])
-    xxxurl = awvs_url + "/api/v1/scans?l=20"
-    xxxget = requests.get(url=xxxurl, headers=headers, verify=False, timeout=10)
-    for y in items:
-        targetid = y.get("target_id")
-        #print(targetid)
-        delurl = awvs_url+"/api/v1/scans/"+targetid
-        delrep = requests.delete(url = delurl,headers=headers,verify=False,timeout=10)
-        #print(delrep.text)
+极好的 添加扫描():
+addurl = awvs_url+"/api/v1/targets/add "
+urls =[]
+targetids =[]
+    随着 打开(' url.txt ',r ') 如同女:
+        为 i 在f.阅读行():
+网址。附加(爱达荷（Idaho的缩写）剥夺())
+    为 x 在URL:
+数据={"targets":[{"address":"%s "，" description":""}]} ' %(x)
+添加=请求。邮政(url=addurl，data=data，headers=headers，verify=错误的，超时=10)
+data_json = add。json()
+items = data_json。得到("目标", [])
+        为 y 在项目:
+targetid = y。得到("目标标识")
+targetids。附加(targetid)  # 将每次迭代得到的targetid添加到列表中
+scanurl = awvs_url+"/api/v1/scans "
+        为targetid在目标id:# 针对列表中的每个targetid进行扫描
+数据2 ={ " profile _ id ":" 11111111-1111-1111-1111-1111 "，" incremental":false，" schedule":{"disable":false，" start_date":null，" time_sensitive":false}，" target_id":"%s"} '% targetid
+扫描=请求。邮政(url=scanurl，data=data2，headers=headers，verify=错误的，超时=10)
+            打印(x，"添加成功")
+极好的 德尔斯坎():
+url = awvs_url+"/api/v1/scans "
+id =请求。得到(url = url，头=头，验证=错误的，超时=10)
+data_json = id。json()
+items = data_json。得到("扫描", [])
+xxxurl = awvs_url +“/api/v1/scans？l=20英寸
+xxxget =请求。得到(url=xxxurl，头=头，验证=错误的，超时=10)
+    为 y 在项目:
+targetid = y。得到("目标标识")
+        #打印(目标id)
+delurl = awvs_url+"/api/v1/scans/"+targetid
+delrep =请求。删除(url = delurl，headers=headers，verify=错误的，超时=10)
+        #打印(delrep.text)
 
 
-if __name__ == '__main__':
-    print("作者：最菜的Mat Blog:https://www.cnblogs.com/matsec")
-    print("\n配置说明：目标请放在url.txt文件中，请在awvs_url中配置awvs地址，apikey中填写key")
-    model = (input("\n添加扫描目标请输入1，删除扫描目标请输入2："))
-    if model == "1":
-        p = multiprocessing.Process(target=addscan)
-        p.start()
-    if model == "2":
-        delscan()
+如果__name__ ==__main__ ':
+    打印("作者：最菜的mat Blog:https://www . cn blogs . com/matsec ")
+    打印(" \n配置说明：目标请放在url.txt文件中,请在awvs_url中配置awv地址，apikey中填写关键")
+型号=(投入(" \n添加扫描目标请输入1,删除扫描目标请输入2:"))
+    如果模型=="1":
+p =多重处理。过程(target=addscan)
+页（page的缩写）开始()
+    如果模型=="2":
+        德尔斯坎()
